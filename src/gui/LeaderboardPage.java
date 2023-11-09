@@ -18,6 +18,18 @@ public class LeaderboardPage extends JFrame {
         setSize(600, 400);
         setLocationRelativeTo(null);
 
+        // Create a panel for better layout control
+        JPanel panel = new JPanel(new BorderLayout());
+
+        // Add a title label
+        JLabel titleLabel = new JLabel("Leaderboard");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setOpaque(true);
+        titleLabel.setBackground(new Color(193, 211, 169)); // Background color
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0)); // Padding
+        panel.add(titleLabel, BorderLayout.NORTH);
+
         // Define column names
         String[] columnNames = { "Username", "Score" };
 
@@ -34,11 +46,20 @@ public class LeaderboardPage extends JFrame {
             leaderboardTable = new JTable(model);
             leaderboardTable.setFillsViewportHeight(true);
 
-            JScrollPane scrollPane = new JScrollPane(leaderboardTable);
-            getContentPane().add(scrollPane);
-
+            // Customize table appearance
             leaderboardTable.setFont(new Font("Arial", Font.PLAIN, 14));
             leaderboardTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
+
+            // Add padding and margin to the table
+            leaderboardTable.setIntercellSpacing(new Dimension(10, 10)); // Margin
+            leaderboardTable.setRowHeight(30); // Row height
+
+            JScrollPane scrollPane = new JScrollPane(leaderboardTable);
+            scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margin
+            panel.add(scrollPane, BorderLayout.CENTER);
+
+            panel.setBackground(Color.WHITE); // Background color
+            getContentPane().add(panel);
 
             setVisible(true);
         } else {
