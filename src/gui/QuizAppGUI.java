@@ -9,6 +9,7 @@ import javax.swing.*;
 
 import controllers.QuizController;
 import models.Question;
+import utils.DatabaseManager;
 
 public class QuizAppGUI extends JFrame {
     private JLabel questionLabel;
@@ -18,7 +19,7 @@ public class QuizAppGUI extends JFrame {
     private int correctAnswerIndex;
     int score;
 
-    public QuizAppGUI() {
+    public QuizAppGUI(String username) {
         setTitle("Brainiac");
         getContentPane().setBackground(new Color(229, 227, 204));
         quizController = new QuizController();
@@ -47,7 +48,7 @@ public class QuizAppGUI extends JFrame {
         nextButton.setFont(new Font("Arial", Font.PLAIN, 20));
         nextButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                nextQuestion();
+                nextQuestion(username);
             }
         });
 
@@ -114,21 +115,24 @@ public class QuizAppGUI extends JFrame {
         }
     }
 
-    private void nextQuestion() {
+    private void nextQuestion(String username) {
         if (quizController.hasNextQuestion()) {
             quizController.moveToNextQuestion();
             displayQuestion();
             nextButton.setEnabled(false);
         } else {
-            JOptionPane.showMessageDialog(this, "Quiz completed!");
-            new ExitPage("Congratulations", score);
+            int finalScore = score; // Get the final score
+            DatabaseManager.insertScore(username, finalScore); // Insert the score into the database
+            JOptionPane.showMessageDialog(this, "Quiz completed! Your score: " + finalScore);
+            setVisible(false);
+            new LeaderboardPage();
         }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new QuizAppGUI();
+                new QuizAppGUI("");
             }
         });
     }

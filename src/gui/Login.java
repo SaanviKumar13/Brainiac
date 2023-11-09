@@ -6,6 +6,9 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Login extends JFrame implements ActionListener {
+    String username;
+    JTextField nameInput = new JTextField();
+
     Login() {
         setTitle("Welcome to Brainiac!");
         setLayout(null);
@@ -24,7 +27,7 @@ public class Login extends JFrame implements ActionListener {
         nameLabel.setFont(new Font("Mongolian Haiti", Font.BOLD, 20));
         nameLabel.setForeground(new Color(195, 213, 170));
         add(nameLabel);
-        JTextField nameInput = new JTextField();
+
         nameInput.setBounds(800, 400, 200, 25);
         nameInput.setFont(new Font("sans", Font.CENTER_BASELINE, 16));
         nameInput.setForeground(new Color(195, 213, 170));
@@ -40,9 +43,9 @@ public class Login extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent ae) {
+        username = nameInput.getText();
         setVisible(false);
-        new QuizAppGUI();
-        // new CategorySelectorApp();
+        new QuizAppGUI(username); // Pass the username to QuizAppGUI
     }
 
     public static void main(String[] args) {
