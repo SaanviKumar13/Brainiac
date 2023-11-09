@@ -41,7 +41,8 @@ public class Login extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent ae) {
         setVisible(false);
-        new CategorySelectorApp();
+        new QuizAppGUI();
+        // new CategorySelectorApp();
     }
 
     public static void main(String[] args) {
